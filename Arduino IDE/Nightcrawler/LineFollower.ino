@@ -15,6 +15,25 @@ void runLineFollowerPID() {
     int M = digitalRead(IR_M);
     int R = digitalRead(IR_R);
 
+    // ================= Checkpoint Logic =================
+    // Stop completely on the black strap for 5 seconds[cite: 1]
+    if (L == BLACK && M == BLACK && R == BLACK) {
+        stopMotors();
+        
+        // Wait for 5 seconds
+        delay(5000); 
+        
+        setMotorSpeeds(BASE_SPEED, BASE_SPEED);
+        delay(700); // Move forward for 700ms to clear the black strap 
+        
+        // Reset PID variables
+        error = 0;
+        lastError = 0;
+        integral = 0;
+        
+        return; // Exit this loop iteration to read fresh sensor data next time
+    }
+
     if (L == BLACK && M == WHITE && R == WHITE)      error = -1;
     else if (L == BLACK && M == BLACK && R == WHITE) error = -2;
     else if (L == WHITE && M == BLACK && R == WHITE) error = 0;
