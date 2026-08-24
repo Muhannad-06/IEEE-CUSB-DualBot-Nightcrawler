@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 /*<<<<<<<<<<<<<<<<<<<<<<<<< PS5 Controller MAC ADDRESS >>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-#define PS5_MAC "48:18:8D:0A:90:60"
+#define PS5_MAC "90:b6:85:a9:fe:67"
 
 /*<<<<<<<<<<<<<<<<<<<<<<<<< Motor >>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 #define ENA 23
@@ -19,9 +19,9 @@
 #define CH_ENB                 1
 
 /*<<<<<<<<<<<<<<<<<<<<<<<<< IR Sensor >>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-#define IR_L 32
-#define IR_M 33
-#define IR_R 25
+#define IR_L 35
+#define IR_M 32
+#define IR_R 33
 
 #define WHITE LOW
 #define BLACK HIGH

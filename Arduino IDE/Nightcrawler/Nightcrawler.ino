@@ -18,9 +18,10 @@ unsigned long lastButtonPress = 0;
 void setup() {
     Serial.begin(115200);
     
+    pinMode(STATUS_LED, OUTPUT);
     initMotors();
     initSensors();
-    
+    initMechanism(SERVO_PIN);
     ps5.begin(PS5_MAC);
     
     Serial.println("System Ready. Starting in AUTONOMOUS Mode.");
@@ -38,6 +39,29 @@ void loop() {
     delay(10); // Small delay to prevent watchdog timeout
 }
 
+bool lastTriangleState = false;
+
+void handleModeSwitching() {
+    if (ps5.isConnected()) {
+        digitalWrite(STATUS_LED, HIGH);
+
+        bool triangleNow = ps5.Triangle();
+        if (triangleNow && !lastTriangleState) {   // only fires once per press
+            currentMode = (currentMode == AUTONOMOUS) ? MANUAL : AUTONOMOUS;
+            stopMotors();
+            updateMechanism(false);
+
+            Serial.print("Mode switched to: ");
+            Serial.println(currentMode == AUTONOMOUS ? "AUTONOMOUS" : "MANUAL");
+        }
+        lastTriangleState = triangleNow;
+
+    } else {
+        digitalWrite(STATUS_LED, LOW);
+    }
+}
+
+/* OLD Mode Switching Logic
 void handleModeSwitching() {
     if (ps5.isConnected()) {
         digitalWrite(STATUS_LED, HIGH); // Indicator that PS5 is linked
@@ -56,6 +80,7 @@ void handleModeSwitching() {
         digitalWrite(STATUS_LED, LOW);
     }
 }
+*/
 
 void runManualControl() {
     if (!ps5.isConnected()) {
