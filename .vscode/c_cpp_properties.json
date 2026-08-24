@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "name": "ESP32",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/src/include/**",
+        "C:/Users/User/AppData/Local/Arduino15/packages/esp32/hardware/esp32/**",
+        "C:/Users/User/AppData/Local/Arduino15/packages/esp32/tools/**",
+        "C:/Users/User/Documents/Arduino/libraries/**"
+      ],
+      "defines": [
+        "ESP32",
+        "ARDUINO_ARCH_ESP32",
+        "ARDUINO=10800",
+        "F_CPU=240000000L",
+        "CONFIG_IDF_TARGET_ESP32"
+      ],
+      "compilerPath": "C:/Users/User/AppData/Local/Arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/esp-2021r2-patch5-8.4.0/bin/xtensa-esp32-elf-gcc.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "gcc-x86"
+    }
+  ],
+  "version": 4
+}
