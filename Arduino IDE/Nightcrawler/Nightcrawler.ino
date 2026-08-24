@@ -13,7 +13,7 @@ enum RobotMode { AUTONOMOUS, MANUAL };
 RobotMode currentMode = AUTONOMOUS;
 
 unsigned long lastButtonPress = 0;
-
+bool lastTriangleState = false;
 
 void setup() {
     Serial.begin(115200);
@@ -38,8 +38,6 @@ void loop() {
     
     delay(10); // Small delay to prevent watchdog timeout
 }
-
-bool lastTriangleState = false;
 
 void handleModeSwitching() {
     if (ps5.isConnected()) {
@@ -98,6 +96,14 @@ void runManualControl() {
     int rightMotor = constrain(speedY - steerX, -200, 200);
 
     setMotorSpeeds(leftMotor, rightMotor);
+
+    /*<<<<<<<<<<<<<<< Serial Tracking >>>>>>>>>>>>>>> */
+    Serial.print("LX: ");   Serial.print(lx);
+    Serial.print(" LY: ");  Serial.print(ly);
+    Serial.print(" | speedY: "); Serial.print(speedY);
+    Serial.print(" steerX: ");   Serial.print(steerX);
+    Serial.print(" | L_motor: "); Serial.print(leftMotor);
+    Serial.print(" R_motor: ");   Serial.println(rightMotor);
 
     /* Cue Control
     *    Cross Button: Activate Cue Mechanism                     */

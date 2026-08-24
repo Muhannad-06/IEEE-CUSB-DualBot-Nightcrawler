@@ -39,8 +39,6 @@ void loop() {
     delay(10); // Small delay to prevent watchdog timeout
 }
 
-bool lastTriangleState = false;
-
 void handleModeSwitching() {
     if (ps5.isConnected()) {
         digitalWrite(STATUS_LED, HIGH);
