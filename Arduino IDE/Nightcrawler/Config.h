@@ -30,7 +30,7 @@
 const float Kp = 60.0;
 const float Ki = 0.001;
 const float Kd = 25.0;
-const int BASE_SPEED = 240;
+const int BASE_SPEED = 200;
 
 /*<<<<<<<<<<<<<<<<<<<<<<<<< Impulse Mechanism >>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 #define SERVO_PIN       4

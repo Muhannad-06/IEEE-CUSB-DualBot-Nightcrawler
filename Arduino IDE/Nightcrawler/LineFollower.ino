@@ -8,6 +8,8 @@ void initSensors() {
     pinMode(IR_L, INPUT);
     pinMode(IR_M, INPUT);
     pinMode(IR_R, INPUT);
+
+    Serial.println("PID Line Following Is Ready ");
 }
 
 void runLineFollowerPID() {
@@ -39,8 +41,7 @@ void runLineFollowerPID() {
     else if (L == WHITE && M == BLACK && R == WHITE) error = 0;
     else if (L == WHITE && M == BLACK && R == BLACK) error = 2;
     else if (L == WHITE && M == WHITE && R == BLACK) error = 1;
-    else if ((L == BLACK && M == BLACK && R == BLACK) || 
-             (L == BLACK && M == WHITE && R == BLACK)) {
+    else if (L == BLACK && M == WHITE && R == BLACK)) {
         stopMotors();
         return;
     }
@@ -58,8 +59,14 @@ void runLineFollowerPID() {
         int rightSpeed = constrain(BASE_SPEED + output, 0, 200);
         setMotorSpeeds(leftSpeed, rightSpeed);
     } else if (error < 0) {
-        setMotorSpeeds(-150, 150); // Rotate Left
+        int leftSpeed  = constrain(BASE_SPEED - output, -200, 200);
+        int rightSpeed = constrain(BASE_SPEED + output, -200, 200);
+        setMotorSpeeds(leftSpeed, rightSpeed);
+        setMotorSpeeds(-leftSpeed, rightSpeed); // Rotate Left
     } else if (error > 0) {
-        setMotorSpeeds(150, -150); // Rotate Right
+        int leftSpeed  = constrain(BASE_SPEED - output, -200, 200);
+        int rightSpeed = constrain(BASE_SPEED + output, -200, 200);
+        setMotorSpeeds(leftSpeed, rightSpeed);
+        setMotorSpeeds(leftSpeed, -rightSpeed); // Rotate Right
     }
 }
