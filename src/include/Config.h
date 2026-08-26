@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 /*<<<<<<<<<<<<<<<<<<<<<<<<< PS5 Controller MAC ADDRESS >>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-#define PS5_MAC "48:18:8D:0A:90:60"
+#define PS5_MAC "90:b6:85:a9:fe:67"
 
 /*<<<<<<<<<<<<<<<<<<<<<<<<< Motor >>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 #define ENA 23
@@ -17,11 +17,12 @@
 #define PWM_RES                8
 #define CH_ENA                 0
 #define CH_ENB                 1
+#define PWM_MAX               255   // Highest duty cycle for 8-bit PWM (0-255)
 
 /*<<<<<<<<<<<<<<<<<<<<<<<<< IR Sensor >>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-#define IR_L 32
-#define IR_M 33
-#define IR_R 25
+#define IR_L 35
+#define IR_M 32
+#define IR_R 33
 
 #define WHITE LOW
 #define BLACK HIGH
@@ -30,7 +31,13 @@
 const float Kp = 60.0;
 const float Ki = 0.001;
 const float Kd = 25.0;
-const int BASE_SPEED = 240;
+const int BASE_SPEED = 200;
+const float PID_INTEGRAL_LIMIT = 100.0;   // anti-windup clamp on the accumulator ( Prevent Violent Spinning When The Robot Leaves The Line or Stuck )
+
+/*<<<<<<<<<<<<<<<<<<<<<<<<< Manual Control >>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+#define STICK_DEADZONE      15           // +/- percent-equivalent (of +/-128 range) treated as neutral 
+#define MANUAL_MAX_SPEED    240     
+#define MANUAL_MAX_STEER    150
 
 /*<<<<<<<<<<<<<<<<<<<<<<<<< Impulse Mechanism >>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 #define SERVO_PIN       4
