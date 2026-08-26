@@ -7,7 +7,7 @@ void initMotors();
 
 /* MOTOR Speed Control 
 *   Sets the speed of the left and right motors.
-*   Range: -PWM_MAX .. +PWM_MAX (values outside this range are clamped internally).
+*   Range: -PWM_MAX to +PWM_MAX (values outside this range are clamped internally).
 *   Sign is direction (based on physical wiring), magnitude is duty cycle.     */
 void setMotorSpeeds(int leftSpeed, int rightSpeed);
 
