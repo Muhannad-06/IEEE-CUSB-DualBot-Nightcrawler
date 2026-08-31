@@ -112,38 +112,96 @@ void runLineFollowerPID() {
     /* <<<<<<<<<<<<<<<<<< Differential Drive Output >>>>>>>>>>>>>>>>>>> */
     // Line drifted right (error < 0) -> output < 0 -> left wheel slows / right speeds up
     // Line drifted left  (error > 0) -> output > 0 -> left wheel speeds up / right slows
-    /* UNCOMMENT THIS ----------> int leftSpeed  = constrain((int)(-(BASE_SPEED - output)), -PWM_MAX, PWM_MAX); */
-    /* UNCOMMENT THIS ----------> int rightSpeed = constrain((int)(-(BASE_SPEED + output)), -PWM_MAX, PWM_MAX); */
-    /* UNCOMMENT THIS ----------> setMotorSpeeds(leftSpeed, rightSpeed);                                        */
+    //  int leftSpeed  = constrain((int)(-(BASE_SPEED - output)), -PWM_MAX, PWM_MAX); 
+    //  int rightSpeed = constrain((int)(-(BASE_SPEED + output)), -PWM_MAX, PWM_MAX); 
+    //  setMotorSpeeds(leftSpeed, rightSpeed);                                        
     
+    /* Raw Turning Moves */
+    //      if (error == 0) {
+    //      // Forward (normal PID)
+    //      int leftSpeed  = constrain(BASE_SPEED - output, 0, 150);
+    //      int rightSpeed = constrain(BASE_SPEED + output, 0, 150);
+
+    //      ledcWrite(CH_ENA, rightSpeed);
+    //      ledcWrite(CH_ENB, leftSpeed);
+    //      digitalWrite(IN1, HIGH);  // Right forward
+    //      digitalWrite(IN2, LOW);   
+    //      digitalWrite(IN3, LOW); 
+    //      digitalWrite(IN4, HIGH);  // Left forward
+
+    //      } else if (error < 0) {
+    //      // Rotate left in place
+    //      int turnSpeed = 120;
+    //      ledcWrite(CH_ENA, turnSpeed);  
+    //      ledcWrite(CH_ENB, turnSpeed);     
+    //      digitalWrite(IN1, LOW); 
+    //      digitalWrite(IN2, HIGH);   // Right forward
+    //      digitalWrite(IN3, LOW); 
+    //      digitalWrite(IN4, HIGH);   // Left backward
+
+    //    } else if (error > 0) {
+    //      int turnSpeed = 120;
+    //      // Rotate right in place
+    //      ledcWrite(CH_ENA, turnSpeed);  
+    //      ledcWrite(CH_ENB, turnSpeed);  
+    //      digitalWrite(IN1, HIGH); 
+    //      digitalWrite(IN2, LOW);  // Right backward
+    //      digitalWrite(IN3, HIGH); 
+    //      digitalWrite(IN4, LOW);  // Left forward
+    //    }
+
     if (error == 0) {
-        // Straight: proportional PID correction
-        int leftSpeed  = constrain((int)(-(BASE_SPEED - output)), -PWM_MAX, PWM_MAX);
-        int rightSpeed = constrain((int)(-(BASE_SPEED + output)), -PWM_MAX, PWM_MAX);
-        setMotorSpeeds(leftSpeed, rightSpeed);
+    // Forward (normal PID)
+    int leftSpeed  = constrain(BASE_SPEED - output, 0, 200);
+    int rightSpeed = constrain(BASE_SPEED + output, 0, 200);
 
-    } else if (error == -1) {
-        // Line drifted Right: rotate Left in place
-        // (left wheel reverse, right wheel forward)
-        int turnSpeed = 150;
-        setMotorSpeeds(-turnSpeed, turnSpeed);
+    ledcWrite(CH_ENA, rightSpeed);
+    ledcWrite(CH_ENB, leftSpeed);
 
-    } else if (error == -2) {
-        // Line drifted Far Right: rotate Hardleft in place
-        // (left wheel reverse, right wheel forward)
-        int turnSpeed = 210;
-        setMotorSpeeds(-turnSpeed, turnSpeed);
-    } else if (error == 1) {
-        // Line drifted Left: rotate Right in place
-        // (left wheel reverse, right wheel forward)
-        int turnSpeed = 150;
-        setMotorSpeeds(turnSpeed, -turnSpeed);
-    } else if (error == 2) {
-        // Line drifted Far Left: rotate HardLeft in place
-        // (left wheel reverse, right wheel forward)
-        int turnSpeed = 210;
-        setMotorSpeeds(turnSpeed, -turnSpeed);
-    }
+    digitalWrite(IN1, HIGH);  // Right forward
+    digitalWrite(IN2, LOW);   
+    digitalWrite(IN3, LOW); 
+    digitalWrite(IN4, HIGH);  // Left forward
+
+  } else if (error < 0) {
+    // Rotate left in place
+    int turnSpeed = 180;
+    ledcWrite(CH_ENA, turnSpeed);  
+    ledcWrite(CH_ENB, turnSpeed);  
+
+    digitalWrite(IN1, HIGH); 
+    digitalWrite(IN2, LOW);   // Right forward
+    digitalWrite(IN3, HIGH); 
+    digitalWrite(IN4, LOW);   // Left backward
+
+  } else if (error > 0) {
+    int turnSpeed = 180;
+    // Rotate right in place
+    ledcWrite(CH_ENA, turnSpeed);  
+    ledcWrite(CH_ENB, turnSpeed);  
+
+    digitalWrite(IN1, LOW); 
+    digitalWrite(IN2, HIGH);  // Right backward
+    digitalWrite(IN3, LOW); 
+    digitalWrite(IN4, HIGH);  // Left forward
+  }
+
+    // if (error == 0) {
+    // // Forward (normal PID)
+    // int leftSpeed  = BASE_SPEED - output;
+    // int rightSpeed = BASE_SPEED + output;
+    // setMotorSpeeds(leftSpeed, rightSpeed);
+
+    // } else if (error < 0) {
+    // // Rotate left in place (left backward, right forward)
+    // int turnSpeed = 150;
+    // setMotorSpeeds(-turnSpeed, turnSpeed);
+
+    // } else if (error > 0) {
+    // // Rotate right in place (left forward, right backward)
+    // int turnSpeed = 150;
+    // setMotorSpeeds(turnSpeed, -turnSpeed);
+    // }
 
     /*<<<<<<<<<<<<<<< Serial For Easier Debugging >>>>>>>>>>>>>>> */
     Serial.print("L="); Serial.print(L);

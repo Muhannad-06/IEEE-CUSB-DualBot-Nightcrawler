@@ -115,40 +115,6 @@ void runLineFollowerPID() {
     //  int rightSpeed = constrain((int)(-(BASE_SPEED + output)), -PWM_MAX, PWM_MAX); 
     //  setMotorSpeeds(leftSpeed, rightSpeed);                                        
     
-    /* Raw Turning Moves */
-    //      if (error == 0) {
-    //      // Forward (normal PID)
-    //      int leftSpeed  = constrain(BASE_SPEED - output, 0, 150);
-    //      int rightSpeed = constrain(BASE_SPEED + output, 0, 150);
-
-    //      ledcWrite(CH_ENA, rightSpeed);
-    //      ledcWrite(CH_ENB, leftSpeed);
-    //      digitalWrite(IN1, HIGH);  // Right forward
-    //      digitalWrite(IN2, LOW);   
-    //      digitalWrite(IN3, LOW); 
-    //      digitalWrite(IN4, HIGH);  // Left forward
-
-    //      } else if (error < 0) {
-    //      // Rotate left in place
-    //      int turnSpeed = 120;
-    //      ledcWrite(CH_ENA, turnSpeed);  
-    //      ledcWrite(CH_ENB, turnSpeed);     
-    //      digitalWrite(IN1, LOW); 
-    //      digitalWrite(IN2, HIGH);   // Right forward
-    //      digitalWrite(IN3, LOW); 
-    //      digitalWrite(IN4, HIGH);   // Left backward
-
-    //    } else if (error > 0) {
-    //      int turnSpeed = 120;
-    //      // Rotate right in place
-    //      ledcWrite(CH_ENA, turnSpeed);  
-    //      ledcWrite(CH_ENB, turnSpeed);  
-    //      digitalWrite(IN1, HIGH); 
-    //      digitalWrite(IN2, LOW);  // Right backward
-    //      digitalWrite(IN3, HIGH); 
-    //      digitalWrite(IN4, LOW);  // Left forward
-    //    }
-
     if (error == 0) {
     // Forward (normal PID)
     int leftSpeed  = constrain(BASE_SPEED - output, 0, 200);
@@ -184,23 +150,6 @@ void runLineFollowerPID() {
     digitalWrite(IN3, LOW); 
     digitalWrite(IN4, HIGH);  // Left forward
   }
-
-    // if (error == 0) {
-    // // Forward (normal PID)
-    // int leftSpeed  = BASE_SPEED - output;
-    // int rightSpeed = BASE_SPEED + output;
-    // setMotorSpeeds(leftSpeed, rightSpeed);
-
-    // } else if (error < 0) {
-    // // Rotate left in place (left backward, right forward)
-    // int turnSpeed = 150;
-    // setMotorSpeeds(-turnSpeed, turnSpeed);
-
-    // } else if (error > 0) {
-    // // Rotate right in place (left forward, right backward)
-    // int turnSpeed = 150;
-    // setMotorSpeeds(turnSpeed, -turnSpeed);
-    // }
 
     /*<<<<<<<<<<<<<<< Serial For Easier Debugging >>>>>>>>>>>>>>> */
     Serial.print("L="); Serial.print(L);
