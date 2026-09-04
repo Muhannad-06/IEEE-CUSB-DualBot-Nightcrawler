@@ -10,13 +10,13 @@
 enum RobotMode { AUTONOMOUS, MANUAL };
 
 /* Start As AUTONOMOUS Mode */
-RobotMode currentMode = AUTONOMOUS;
+RobotMode currentMode = MANUAL;
 
 bool lastTriangleState = false;
 
 void setup() {
     Serial.begin(115200);
-
+    pinMode(LASER, OUTPUT);
     pinMode(STATUS_LED, OUTPUT);
     initMotors();
     initSensors();
@@ -41,7 +41,7 @@ void loop() {
 void handleModeSwitching() {
     if (ps5.isConnected()) {
         digitalWrite(STATUS_LED, HIGH);
-
+        digitalWrite(LASER, HIGH);
         bool triangleNow = ps5.Triangle();
         if (triangleNow && !lastTriangleState) {   // edge-triggered: fires once per press, not once per poll while held
             currentMode = (currentMode == AUTONOMOUS) ? MANUAL : AUTONOMOUS;
@@ -64,6 +64,7 @@ void handleModeSwitching() {
 
     } else {
         digitalWrite(STATUS_LED, LOW);
+        digitalWrite(LASER, LOW);
     }
 }
 
@@ -99,14 +100,14 @@ void runManualControl() {
     setMotorSpeeds(leftMotor, rightMotor);
 
     /*<<<<<<<<<<<<<<< Serial For Easier Debugging >>>>>>>>>>>>>>> */ 
-    Serial.print("LX: ");   Serial.print(lx);
-    Serial.print(" LY: ");  Serial.print(ly);
-    Serial.print(" | speedY: "); Serial.print(speedY);
-    Serial.print(" steerX: ");   Serial.print(steerX);
-    Serial.print(" | L_motor: "); Serial.print(leftMotor);
-    Serial.print(" R_motor: ");   Serial.println(rightMotor);  /* Always Remember the Last One is Println ( 3ashan Msh Tefdal 2 hours msh 3aref el Code msh be respond leeeeeeeeeeeh ) */
+    // Serial.print("LX: ");   Serial.print(lx);
+    // Serial.print(" LY: ");  Serial.print(ly);
+    // Serial.print(" | speedY: "); Serial.print(speedY);
+    // Serial.print(" steerX: ");   Serial.print(steerX);
+    // Serial.print(" | L_motor: "); Serial.print(leftMotor);
+    // Serial.print(" R_motor: ");   Serial.println(rightMotor);  /* Always Remember the Last One is Println ( 3ashan Msh Tefdal 2 hours msh 3aref el Code msh be respond leeeeeeeeeeeh ) */
 
-    /* Cue Control
-    *    Cross Button: Activate Cue Mechanism                     */
+    // /* Cue Control
+    /*    Cross Button: Activate Cue Mechanism                     */
     updateMechanism(ps5.Cross());
 }
